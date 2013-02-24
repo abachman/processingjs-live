@@ -1,0 +1,82 @@
+<html>
+<head>
+  <title>processing.js playground</title>
+  <script type="text/javascript" src="scripts/processing.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+  <style type="text/css">
+		body {
+      margin: 20px 0px;
+		  font-family: verdana, geneva, arial, helvetica, sans-serif; 
+		  font-size: 11px; 
+		  background-color: #ddddcc; 
+		  text-decoration: none; 
+		  font-weight: normal; 
+		  line-height: normal; 
+      text-align: center;
+		}
+
+    table {
+      text-align: center;
+    }
+		 
+		a          { color: #3399cc; }
+		a:link     { color: #3399cc; text-decoration: underline; }
+		a:visited  { color: #3399cc; text-decoration: underline; }
+		a:active   { color: #3399cc; text-decoration: underline; }
+		a:hover    { color: #3399cc; text-decoration: underline; }
+  </style>
+  <script type='text/javascript'>
+    function init() {
+      $("#display").fadeOut("normal", function() {
+        $("#display").remove();
+        $("#display_box").html('<canvas id="display" style="width:300px;height:300px;display:none;"></canvas>');
+        Processing($('#display')[0], $('#src_edit').val());
+        $("#display").fadeIn();
+      });
+    }
+
+    function load_script(name) {
+      $("#scripts").append('<script type="application/processing" id="' + name + '" src="sketches/'+ name +'.js"><\/script>');
+      $.get($("#"+ name).attr("src"), function(data) {$("#src_edit").text(data)} );
+      init();
+    }
+
+    $(document).ready(function() {
+      load_script("simple_tree");
+    });
+
+    function reload() {
+      init();
+    }
+  </script>
+
+</head>
+<body>
+  <div id="scripts"></div>
+
+  <div id="display_box" style="padding: 2px; border: 1px solid #886;display:inline-block;">
+    <canvas id="display" height="300" width="300">
+  </div><br />
+  <a href="#edit" id="edit_link" onclick="reload()" style="font-weight:bold;font-size:14px;">RELOAD</a><br />
+
+  <hr />
+
+  <table align='center'>
+    <tr>
+      <td valign="top" style="padding-right:16px;text-align:left;">
+        <ul style="list-style-type:none;">
+          <li><a href="#" onclick="load_script('simple_tree')">Simple Tree</a></li>
+          <li><a href="#" onclick="load_script('circles')">Circles</a></li>
+          <li>- - - </li>
+          <li><a href="processingjs.zip">download site</a></li>
+        </ul>
+      </td>
+      <td>
+        <textarea id="src_edit" style="width:800px;height:900px">
+        </textarea>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
